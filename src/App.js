@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import Box from '3box'
+import Box from '3box/dist/3box.min.js'
 import ThreeBoxCommentsReact from '3box-comments-react'
 import Web3 from 'web3'
 
