@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState} from 'react';
+import Box from '3box'
+import ThreeBoxCommentsReact from '3box-comments-react'
+import Web3 from 'web3'
 
 function App() {
+  const [box, setBox] = useState(null)
+  const [currentUserAddress, setCurrentUserAddress] = useState('')
+
+  useEffect(() => {
+    const handle3boxLogin = async () => {
+      await window.ethereum.enable()
+      const web3 = new Web3(window.ethereum)
+      const accounts = await web3.eth.getAccounts()
+      setCurrentUserAddress(accounts[0])
+      debugger
+      const newBox = await Box.openBox(accounts[0], web3.currentProvider)
+      await newBox.openSpace('test')
+
+      newBox.onSyncDone(() => {
+        setBox(newBox)
+      })
+    }
+
+    handle3boxLogin()
+  }, [])
+
+  if (!box || !currentUserAddress) {
+    return null
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Comments</h1>
+      <ThreeBoxCommentsReact
+        adminEthAddr='0x0000000000000000000000000000000000000000'
+        box={box}
+        currentUserAddr={currentUserAddress}
+        showCommentCount={10}
+        spaceName='test'
+        threadName='test'
+        useHovers={false}
+      />
     </div>
-  );
+  )
 }
 
 export default App;
