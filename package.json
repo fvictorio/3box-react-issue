@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "3box": "^1.13.1",
     "3box-comments-react": "^0.0.1-beta.14",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react';
-import Box from '3box/dist/3box.min.js'
 import ThreeBoxCommentsReact from '3box-comments-react'
 import Web3 from 'web3'
 
@@ -14,7 +13,7 @@ function App() {
       const accounts = await web3.eth.getAccounts()
       setCurrentUserAddress(accounts[0])
       debugger
-      const newBox = await Box.openBox(accounts[0], web3.currentProvider)
+      const newBox = await window.Box.openBox(accounts[0], web3.currentProvider)
       await newBox.openSpace('test')
 
       newBox.onSyncDone(() => {
